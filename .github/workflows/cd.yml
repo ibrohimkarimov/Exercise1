@@ -1,21 +1,24 @@
-name: CD
-
+name: ci
 on:
   push:
     branches:
-      - main
+      - main  # Adjust the branch as needed
 
 jobs:
   deploy:
     runs-on: self-hosted
-    
     steps:
-    - name: Download Docker image
-      run: docker pull ikarimovkh/exercise1:latest
-      
-    - name: Stop and remove existing container (if running)
-      run: docker stop exercise1 || true && docker rm exercise1 || true
-      
-    - name: Run Docker container
-      run: docker run -d --name exercise1 -p 3000:3000 ikarimovkh/exercise1:latest
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
+      - name: Pull Docker Image
+        run: docker pull ikarimovkh/exercise:latest
+
+      - name: Stop Previous Container (if exists)
+        run: docker stop exercise || true
+
+      - name: Remove Previous Container (if exists)
+        run: docker rm exercise1 || true
+
+      - name: Run Docker Container
+        run: docker run -d --name exercise1 -p 3000:3000 ikarimovkh/exercise1:latest
