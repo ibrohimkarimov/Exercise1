@@ -11,11 +11,11 @@ jobs:
     
     steps:
     - name: Download Docker image
-      run: docker pull your-dockerhub-username/your-app-name:latest
+      run: docker pull ikarimovkh/exercise1:latest
       
     - name: Stop and remove existing container (if running)
-      run: docker stop your-container-name || true && docker rm your-container-name || true
+      run: docker stop exercise1 || true && docker rm exercise1 || true
       
     - name: Run Docker container
-      run: docker run -d --name your-container-name -p 3000:3000 your-dockerhub-username/your-app-name:latest
+      run: docker run -d --name exercise1 -p 3000:3000 ikarimovkh/exercise1:latest
 
