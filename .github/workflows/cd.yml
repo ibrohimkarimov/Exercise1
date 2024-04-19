@@ -10,7 +10,7 @@ jobs:
     runs-on: self-hosted  # Use your self-hosted runner here
     steps:
       - name: Pull Docker Image
-        run: docker pull your-dockerhub-username/your-image:latest
+        run: docker pull ikarimovkh/exercise1:latest
 
       - name: Stop and Remove Existing Container
         run: |
