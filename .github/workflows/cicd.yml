@@ -13,22 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Run CI job
-      - name: CI
+      - name: Run CI
         uses: ./.github/workflows/ci.yml
 
-      # Run CD job if CI job succeeds
-      - name: CD
+      - name: Run CD
         if: success()
         uses: ./.github/workflows/cd.yml
 
-      # Handle failure
       - name: Handle Failures
         if: failure()
         run: |
           echo "$(date +'%Y-%m-%d %H:%M:%S') - CI/CD job failed in repository $GITHUB_REPOSITORY" >> failure_log.txt
 
-      # Ensure web app accessibility
       - name: Ensure Web App Accessibility
         run: |
           # Add your command to ensure web app accessibility on port 3000
