@@ -1,4 +1,4 @@
-name: ci/cd Sequence
+name: CI/CD Sequence
 
 on:
   push:
@@ -15,12 +15,16 @@ jobs:
 
       # Run CI job
       - name: CI
-        uses: ./.github/workflows/ci.yml
+        run: |
+          cd .github/workflows
+          bash ci.yml
 
       # Run CD job if CI job succeeds
       - name: CD
         if: success()
-        uses: ./.github/workflows/cd.yml
+        run: |
+          cd .github/workflows
+          bash cd.yml
 
       # Handle failure
       - name: Handle Failures
