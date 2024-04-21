@@ -1,7 +1,5 @@
 jobs:
   build:
-    ...
-  
   deploy:
     needs: build
     runs-on: ubuntu-latest
