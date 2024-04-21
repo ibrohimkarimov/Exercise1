@@ -1,65 +1,10 @@
-name: CI/CD
-
-on:
-  push:
-    branches:
-      - main
-      - master
-
 jobs:
-  ci_cd:
-    runs-on: self-hosted
-
+  build:
+    ...
+  
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run CI
-        if: always() # Ensure CI always runs
-        run: |
-          # Example CI script
-          echo "Running CI..."
-          # Add your CI commands here
-          # For example, npm install, npm test, etc.
-          sleep 5 # Placeholder command
-
-      - name: Check CI status
-        if: always() # Ensure this step always runs
-        run: |
-          if [ $? -ne 0 ]; then
-            echo "$(date +'%Y-%m-%d %H:%M:%S') CI/CD failed for repository: $GITHUB_REPOSITORY" >> failure_log.txt
-            exit 1 # Exit with failure code if CI fails
-          fi
-
-      - name: Run CD
-        if: success() # CD runs only if CI succeeds
-        run: |
-          # Example CD script
-          echo "Running CD..."
-          # Add your CD commands here
-          # For example, deploy the application
-          sleep 5 # Placeholder command
-
-      - name: Check CD status
-        if: always() # Ensure this step always runs
-        run: |
-          if [ $? -ne 0 ]; then
-            echo "$(date +'%Y-%m-%d %H:%M:%S') CI/CD failed for repository: $GITHUB_REPOSITORY" >> failure_log.txt
-          fi
-
-      - name: Start web app
-        if: success() # Start web app only if CD succeeds
-        run: |
-          # Start the web app on port 3000
-          # Replace the following command with the command to start your web app
-          echo "Starting the web app on port 3000..."
-          sleep 5 # Placeholder command
-
-      - name: Ensure web app is accessible
-        if: success() # Check accessibility only if CD succeeds
-        run: |
-          # Verify that the web app is accessible on port 3000
-          # You can add additional commands for testing accessibility
-          echo "Verifying accessibility of the web app on port 3000..."
-          curl -Is http://localhost:3000 | head -n 1
-
+      - name: Deploy to Production
+        uses: ./.github/workflows/cd.yml
