@@ -23,7 +23,8 @@ jobs:
       
     - name: Build Docker image
       run: |
-        docker build -t ikarimovkh/exercise1:latest 
+        #docker build -t ikarimovkh/exercise1:latest .
+        docker build -t ikarimovkh/exercise1:latest .
       
     - name: Push Docker image to DockerHub
       uses: docker/build-push-action@v2
